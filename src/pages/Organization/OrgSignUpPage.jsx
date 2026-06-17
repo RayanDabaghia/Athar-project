@@ -1,0 +1,70 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import arrowBack from '../../images/Icons/arrow.png'
+import OrgStepOne from '../../components/Organization/Auth/OrgStepOne'
+import OrgStepTwo from '../../components/Organization/Auth/OrgStepTwo'
+import OrgStepThree from '../../components/Organization/Auth/OrgStepThree'
+import OrgSuccess from '../../components/Organization/Auth/OrgSuccess'
+
+const OrgSignUpPage = () => {
+    const navigate = useNavigate()
+    const [currentStep, setCurrentStep] = useState(1)
+    const [formData, setFormData] = useState({
+        orgName: '',
+        email: '',
+        phone: '',
+        address: '',
+        description: '',
+        password: '',
+        documents: []
+    })
+
+    const nextStep = () => setCurrentStep(prev => prev + 1)
+    const prevStep = () => setCurrentStep(prev => prev - 1)
+
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1: return <OrgStepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
+            case 2: return <OrgStepTwo formData={formData} setFormData={setFormData} onNext={nextStep} />
+            case 3: return <OrgStepThree formData={formData} setFormData={setFormData} onNext={nextStep} />
+            case 4: return <OrgSuccess />
+            default: return <OrgStepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
+        }
+    }
+
+    return (
+        <div className="w-full min-h-screen bg-[#0A3A45] flex flex-col items-center justify-center relative overflow-hidden py-[40px]">
+
+            {/* سهم الرجوع */}
+            {currentStep < 4 && (
+                <img
+                    src={arrowBack}
+                    alt="back"
+                    className="absolute top-[40px] left-[40px] w-[38px] h-[33px] cursor-pointer z-10"
+                    style={{ filter: 'invert(1)' }}
+                    onClick={() => currentStep === 1 ? navigate(-1) : prevStep()}
+                />
+            )}
+
+            {/* الخطوط الجانبية اليسار */}
+            <div className="absolute left-0 top-[20%] flex flex-col gap-3">
+                <div className="w-[482px] h-[8px] bg-[#F7F9FA]"></div>
+                <div className="w-[482px] h-[8px] bg-[#FFC107]"></div>
+            </div>
+
+            {/* الخطوط الجانبية اليمين */}
+            <div className="absolute right-0 top-[80%] flex flex-col gap-3">
+                <div className="w-[482px] h-[8px] bg-[#FFC107]"></div>
+                <div className="w-[482px] h-[8px] bg-[#F7F9FA]"></div>
+            </div>
+
+            {/* الكارد */}
+            <div className="bg-[#F7F9FA] rounded-[56px] w-full max-w-[750px] px-[80px] py-[50px] z-10">
+                {renderStep()}
+            </div>
+
+        </div>
+    )
+}
+
+export default OrgSignUpPage
