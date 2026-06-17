@@ -4,7 +4,7 @@ import eyeOpenIcon from '../../../images/Icons/open-eye.png'
 const StepThree = ({ formData, setFormData }) => {
     const [errors, setErrors] = useState({ password: '', confirmPassword: '' })
     const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [showConfirmPassword,] = useState(false)
 
     const validate = () => {
         let valid = true

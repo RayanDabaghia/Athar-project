@@ -17,7 +17,6 @@ function Homepage() {
                 <Navbar />
                 <Hero />
                 <WhyChooseAthar />
-
                 <StateSection />
                 <FeaturedCampaigns className="mt-[-150px]" />
                 <WhatweOffer />
