@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const StepTwo = ({ formData, setFormData, onNext }) => {
+const StepTwo = ({ formData, setFormData, onNext, loading, apiError }) => {
     const [error, setError] = useState('')
 
     const validate = () => {
@@ -17,7 +17,7 @@ const StepTwo = ({ formData, setFormData, onNext }) => {
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center  h-full justify-between">
 
             {/* العنوان */}
             <h1 className="text-[40px] font-medium font-poppins text-[#0A3A45] mb-2">Create an account</h1>
@@ -63,12 +63,14 @@ const StepTwo = ({ formData, setFormData, onNext }) => {
                 />
                 {error && <p className="text-red-500 text-[12px] mt-1">{error}</p>}
             </div>
-
+            {apiError && <p className="text-red-500 text-[12px] mb-2 text-center">{apiError}</p>}
             {/* الزر */}
             <button
                 onClick={handleContinue}
+                disabled={loading}
                 className="w-full py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-4">
-                Continue
+                {loading ? 'Verifying...' : 'Continue'}
+
             </button>
 
             {/* Resend */}

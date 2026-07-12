@@ -13,12 +13,12 @@ function Homepage() {
     return (
         <>
 
-            <div className=" w-full min-h-screen bg-[#FFFFFF] flex flex-col overflow-x-hidden">
+            <div className="scrollbar-none w-full min-h-screen bg-[#F7F9FA] flex flex-col overflow-x-hidden">
                 <Navbar />
                 <Hero />
                 <WhyChooseAthar />
-                <StateSection />
-                <FeaturedCampaigns className="mt-[-150px]" />
+                <StateSection className="mt-[-150px]" />
+                <FeaturedCampaigns />
                 <WhatweOffer />
                 <HowItWorks />
                 <JoinBanner />

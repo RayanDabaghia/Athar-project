@@ -8,6 +8,8 @@ import StepThree from '../../components/Volunteer/Auth/StepThree'
 const VolunteerSignUpPage = () => {
     const navigate = useNavigate()
     const [currentStep, setCurrentStep] = useState(1)
+    const [loading, setLoading] = useState(false)
+    const [apiError, setApiError] = useState('')
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -19,11 +21,62 @@ const VolunteerSignUpPage = () => {
     const nextStep = () => setCurrentStep(prev => prev + 1)
     const prevStep = () => setCurrentStep(prev => prev - 1)
 
+
+    const handleRegister = async () => {
+        setLoading(true)
+        setApiError('')
+        try {
+            const response = await fetch('https://athar.mohamadbelalsheshman.com/api/volunteer/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    full_name: formData.fullName,
+                    email: formData.email,
+                    password: formData.password
+                })
+            })
+            if (response.ok) {
+                nextStep()
+            } else {
+                const data = await response.json()
+                setApiError(data.message || 'Something went wrong')
+            }
+        } catch {
+            setApiError('Something went wrong, please try again')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleVerify = async () => {
+        setLoading(true)
+        setApiError('')
+        try {
+            const response = await fetch('https://athar.mohamadbelalsheshman.com/api/volunteer/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: formData.email,
+                    code: formData.verifyCode
+                })
+            })
+            if (response.ok) {
+                navigate('/signin')
+            } else {
+                const data = await response.json()
+                setApiError(data.message || 'Invalid code')
+            }
+        } catch {
+            setApiError('Something went wrong, please try again')
+        } finally {
+            setLoading(false)
+        }
+    }
     const renderStep = () => {
         switch (currentStep) {
             case 1: return <StepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
-            case 2: return <StepTwo formData={formData} setFormData={setFormData} onNext={nextStep} />
-            case 3: return <StepThree formData={formData} setFormData={setFormData} />
+            case 2: return <StepTwo formData={formData} setFormData={setFormData} onNext={handleVerify} loading={loading} apiError={apiError} />
+            case 3: return <StepThree formData={formData} setFormData={setFormData} onNext={handleRegister} loading={loading} apiError={apiError} />
             default: return <StepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
         }
     }
@@ -53,7 +106,7 @@ const VolunteerSignUpPage = () => {
             </div>
 
             {/* الكارد */}
-            <div className="bg-[#F7F9FA] rounded-[56px] max-w-[850px] px-[80px] py-[50px] z-10">
+            <div className="bg-[#F7F9FA] rounded-[56px] max-w-[850px] h-[600px] px-[80px] py-[50px] z-10">
                 {renderStep()}
             </div>
 

@@ -25,7 +25,7 @@ const StepOne = ({ formData, setFormData, onNext }) => {
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center   h-full justify-between">
 
             {/* العنوان */}
             <h1 className="text-[40px] font-medium font-poppins text-[#0A3A45]  mb-2">Create an account</h1>
@@ -54,7 +54,7 @@ const StepOne = ({ formData, setFormData, onNext }) => {
             </div>
 
             {/* الحقول */}
-            <div className="w-full flex flex-col gap-4 mb-6">
+            <div className="w-full flex flex-col gap-4 mb-6 ">
 
                 <div className="w-full">
                     <label className="text-[14px] font-normal text-[#0A3A45F0] font-poppins mb-1 block">

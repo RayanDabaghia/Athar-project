@@ -90,7 +90,7 @@ const OrgStepOne = ({ formData, setFormData, onNext }) => {
             {/* الزر */}
             <button
                 onClick={handleContinue}
-                className="w-full py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-4">
+                className="w-[600px] py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-4">
                 Continue
             </button>
 

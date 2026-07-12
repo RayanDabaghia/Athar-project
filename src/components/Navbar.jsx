@@ -9,7 +9,7 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Contact us", path: "/contact" },];
     return (
-        <nav className="h-[80px] bg-[#0A3A45] flex items-center justify-between px-16 text-white font-['Inter'] ">
+        <nav className="h-[80px] bg-[#0A3A45] flex items-center justify-between px-16 text-white font-['Inter'] z-50 ">
             <div className="flex items-center gap-2">
                 <div className="w-[45px] h-[45px] bg-[#FFC107] rounded-lg"></div>
                 <span className="text-2xl font-bold tracking-wider">ATHAR</span>
@@ -31,7 +31,9 @@ const Navbar = () => {
             </ul>
 
             <div className="flex items-center gap-6">
-                <button className="text-[16px] hover:text-[#FFC107] transition-colors">Sign in</button>
+                <button
+                    onClick={() => navigate('/signin')}
+                    className="text-[16px] hover:text-[#FFC107] transition-colors">Sign in</button>
                 <button
                     onClick={() => navigate('/get-started')}
                     className=" text-[16px] border-2 border-[#FFC107] text-[#FFC107] px-5 py-1.5 rounded-[10px] font-bold hover:bg-[#FFC107] hover:text-[#0A3A45] transition-all cursor-pointer">
