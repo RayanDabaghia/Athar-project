@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import eyeClosedIcon from '../../../images/Icons/eye-slash.png'
 import eyeOpenIcon from '../../../images/Icons/open-eye.png'
-const StepThree = ({ formData, setFormData }) => {
+const StepThree = ({ formData, setFormData, onNext, loading, apiError }) => {
     const [errors, setErrors] = useState({ password: '', confirmPassword: '' })
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword,] = useState(false)
@@ -31,14 +31,14 @@ const StepThree = ({ formData, setFormData }) => {
     }
 
     const handleSubmit = () => {
-        if (validate()) {
-            console.log('Form submitted:', formData)
-            // هون رح نربط الـ API بعدين
-        }
+        if (validate())
+            onNext()
+        // هون رح نربط الـ API بعدين
+
     }
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center   h-full justify-between">
 
             {/* العنوان */}
             <h1 className="text-[40px] font-medium font-poppins text-[#0A3A45] mb-2">Create an account</h1>
@@ -115,11 +115,13 @@ const StepThree = ({ formData, setFormData }) => {
                 </div>
 
             </div>
-
+            {apiError && <p className="text-red-500 text-[12px] mb-2 text-center">{apiError}</p>}
             {/* الزر */}
             <button
                 onClick={handleSubmit}
+                disabled={loading}
                 className="w-full py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity">
+                {loading ? 'Creating account...' : 'Get Started'}
                 Get Started
             </button>
 
