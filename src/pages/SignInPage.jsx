@@ -62,20 +62,21 @@ return (
       {/* Form */}
       <div
         className="
-          w-full
-
-          lg:w-[80%]
+w-full
+max-w-[520px]
+lg:max-w-none
+lg:w-1/2
           bg-[#F7F9FA]
           rounded-[28px]
           lg:rounded-[40px]
-          lg:-ml-6
+          lg:-ml-11
           shadow-2xl
           px-6
           font-poppins
           sm:px-10
           lg:px-12
           py-8
-          lg:h-[520px]
+          lg:min-h-[520px]
           flex
           flex-col
           justify-center
