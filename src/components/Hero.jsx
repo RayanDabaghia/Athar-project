@@ -2,7 +2,7 @@ import heroImg from '../images/Hero.png';
 
 const Hero = () => {
     return (
-        <section className="  flex flex-col md:flex-row items-center justify-between px-16 py-10 min-h-[800px] bg-white max-w-[1523px] mx-auto max-w-screen-2x">
+        <section className="  flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-10 md:min-h-[800px] bg-white max-w-[1523px] mx-auto max-w-screen-2x">
             <div className="flex-1 min-w-max z-10 space-y-6 mt-[-226px]">
                 <h1 className="font-adlam text-[70px] leading-[1.1] ">
                     <span className=" text-[#FFC107] block">Create Change</span>

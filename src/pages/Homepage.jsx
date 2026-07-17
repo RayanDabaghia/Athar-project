@@ -13,7 +13,7 @@ function Homepage() {
     return (
         <>
 
-            <div className="scrollbar-none w-full min-h-screen bg-[#F7F9FA] flex flex-col overflow-x-hidden">
+            <div className=" w-full min-h-screen bg-[#F7F9FA] flex flex-col overflow-x-hidden">
                 <Navbar />
                 <Hero />
                 <WhyChooseAthar />
