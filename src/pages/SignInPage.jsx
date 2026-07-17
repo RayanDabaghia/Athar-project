@@ -46,103 +46,166 @@ const SignInPage = () => {
             setLoading(false)
         }
     }
+return (
+  <div className="min-h-screen bg-[#0A3A45] flex items-center justify-center p-4 sm:p-6 lg:p-10">
+    <div className="w-full max-w-7xl flex items-center justify-center">
 
-    return (
-        <div className="w-full min-h-screen bg-[#0A3A45] flex items-center justify-center relative overflow-hidden p-[60px]">
-            <div className="w-full min-h-screen flex mx-auto">
+      {/* Image */}
+      <div className="hidden lg:block lg:w-1/2 lg:h-[520px] overflow-hidden rounded-l-[40px]">
+        <img
+          src={AtharImage}
+          alt="Sign In"
+          className="w-full h-full object-cover"
+        />
+      </div>
 
-                {/* الصورة - يسار */}
-                <div className="w-[55%] h-full rounded-l-[56px] overflow-hidden flex-shrink-0">
-                    <img src={AtharImage} alt="sign in" className="w-full h-full object-cover" />
-                </div>
+      {/* Form */}
+      <div
+        className="
+w-full
+max-w-[520px]
+lg:max-w-none
+lg:w-1/2
+          bg-[#F7F9FA]
+          rounded-[28px]
+          lg:rounded-[40px]
+          lg:-ml-11
+          shadow-2xl
+          px-6
+          font-poppins
+          sm:px-10
+          lg:px-12
+          py-8
+          lg:min-h-[520px]
+          flex
+          flex-col
+          justify-center
+        "
+      >
+        <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-medium text-[#0A3A45] mb-2">
+          Welcome Back !
+        </h1>
 
-                {/* الكارد - يمين */}
-                <div className="w-[50%] min-h-[400px] bg-[#F7F9FA] rounded-[56px] flex flex-col justify-center px-[60px] -ml-[5%] z-10 shadow-xl flex-shrink-0 gap-4">
+        <p className="text-sm sm:text-base text-[#5C6B73] mb-8">
+          Please Enter Your Email & Password
+        </p>
 
-                    {/* العنوان */}
-                    <h1 className="text-[48px] font-bold font-poppins text-[#0A3A45] mb-2">
-                        Welcome Back !
-                    </h1>
-                    <p className="text-[16px] text-[#5C6B73] font-poppins mb-8">
-                        Please Enter Your Email & Password
-                    </p>
+        <div className="space-y-5">
 
-                    {/* الحقول */}
-                    <div className="flex flex-col gap-4 mb-6">
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-[#0A3A45] mb-2">
+              What's your email? <span className="text-red-500">*</span>
+            </label>
 
-                        {/* الإيميل */}
-                        <div>
-                            <label className="text-[14px] font-normal text-[#0A3A45] font-poppins mb-1 block">
-                                What's your email? <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="email"
-                                placeholder="Enter your email address"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className={`w-full px-4 py-3 rounded-[12px] border outline-none font-outfit text-[14px] bg-[#F7F9FA]
-                    ${errors.email ? 'border-[#EE1D52]' : 'border-[#FFC107]'}`}
-                            />
-                            {errors.email && <p className="text-red-500 text-[12px] mt-1">{errors.email}</p>}
-                        </div>
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+              }
+              className={`w-full h-12 rounded-xl border bg-white px-4 outline-none transition
+              ${
+                errors.email
+                  ? "border-red-500"
+                  : "border-[#FFC107] focus:border-[#0A3A45]"
+              }`}
+            />
 
-                        {/* الباسورد */}
-                        <div>
-                            <label className="text-[14px] font-normal text-[#0A3A45] font-poppins mb-1 block">
-                                What's your password? <span className="text-red-500">*</span>
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder="Enter your password"
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    className={`w-full px-4 py-3 rounded-[12px] border outline-none font-outfit text-[14px] bg-[#F7F9FA]
-                        ${errors.password ? 'border-[#EE1D52]' : 'border-[#FFC107]'}`}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                                >
-                                    <img src={showPassword ? eyeClose : eyeOpen} alt="toggle password" className="w-5 h-5" />
-                                </button>
-                            </div>
-                            {errors.password && <p className="text-red-500 text-[12px] mt-1">{errors.password}</p>}
-                            <p
-                                onClick={() => navigate('/forgot-password')}
-                                className="text-[12px] text-[#5C6B73] font-poppins text-right mt-1 cursor-pointer">
-                                Forgot your password ?
-                            </p>
-                        </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email}
+              </p>
+            )}
+          </div>
 
-                    </div>
-                    {/* رسالة الخطأ */}
-                    {apiError && <p className="text-red-500 text-[12px] mb-2 text-center">{apiError}</p>}
-                    {/* زر الدخول */}
-                    <button
-                        onClick={handleSubmit}
-                        disabled={loading}
-                        className="w-full py-3 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-8 flex items-center justify-center gap-4"
-                    >
-                        Log in →
-                    </button>
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium text-[#0A3A45] mb-2">
+              What's your password? <span className="text-red-500">*</span>
+            </label>
 
-                    {/* Don't have an account */}
-                    <div className="flex items-center justify-between">
-                        <p className="text-[14px] text-[#5C6B73] font-poppins">Don't Have An Account ?</p>
-                        <p
-                            onClick={() => navigate('/select-role')}
-                            className="text-[14px] text-[#0A3A45F0] font-poppins cursor-pointer"
-                        >
-                            Create Account
-                        </p>
-                    </div>
-                </div>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    password: e.target.value,
+                  })
+                }
+                className={`w-full h-12 rounded-xl border bg-white px-4 pr-12 outline-none transition
+                ${
+                  errors.password
+                    ? "border-red-500"
+                    : "border-[#FFC107] focus:border-[#0A3A45]"
+                }`}
+              />
 
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2"
+              >
+                <img
+                  src={showPassword ? eyeClose : eyeOpen}
+                  alt="Toggle Password"
+                  className="w-5 h-5"
+                />
+              </button>
             </div>
+
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password}
+              </p>
+            )}
+
+            <p
+              onClick={() => navigate("/forgot-password")}
+              className="mt-2 text-xs text-right text-[#5C6B73] hover:text-[#0A3A45] cursor-pointer"
+            >
+              Forgot your password?
+            </p>
+          </div>
         </div>
-    )
+
+        {apiError && (
+          <p className="text-red-500 text-sm text-center mt-5">
+            {apiError}
+          </p>
+        )}
+
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="mt-8 h-12 rounded-xl bg-[#0A3A45] hover:bg-[#114b57] transition text-white font-semibold disabled:opacity-70"
+        >
+          {loading ? "Loading..." : "Log in →"}
+        </button>
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-8 text-sm">
+          <p className="text-[#5C6B73]">
+            Don't Have An Account?
+          </p>
+
+          <button
+            onClick={() => navigate("/select-role")}
+            className="text-[#0A3A45] font-semibold hover:underline"
+          >
+            Create Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 }
 
 export default SignInPage

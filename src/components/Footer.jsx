@@ -4,7 +4,7 @@ import phonelIcon from "../images/Icons/phone.png"
 import pinIcon from "../images/Icons/pin.png"
 const Footer = () => {
     return (
-        <footer className="bg-[#F7F9FA]">
+        <footer className="bg-[#F7F9FA]  ">
 
             <div className=" py-12 px-16 grid grid-cols-[1.5fr_1fr_1fr_1.5fr] gap-8 items-center">
 
@@ -22,6 +22,7 @@ const Footer = () => {
                                     {item}
                                 </a>
                             </li>
+                            
                         ))}
                     </ul>
                 </div>

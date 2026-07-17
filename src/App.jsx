@@ -10,9 +10,11 @@ import VolunteerSignUpPage from './pages/Volunteer/VoulnteerSignUpPage'
 import OrgSignUpPage from './pages/Organization/OrgSignUpPage'
 import SignInPage from './pages/SignInPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
-
+import './App.css'
+import './index.css'
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -29,6 +31,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
     </BrowserRouter>
+    </>
   )
 }
 
