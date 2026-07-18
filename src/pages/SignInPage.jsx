@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from '../api/axios'
 import AtharImage from '../images/Icons/SignIn.png'
 import eyeOpen from '../images/Icons/open-eye.png'
 import eyeClose from '../images/Icons/eye-slash.png'
+
 const SignInPage = () => {
 
     const navigate = useNavigate()
@@ -26,22 +28,29 @@ const SignInPage = () => {
         setLoading(true)
         setApiError('')
         try {
-            const response = await fetch('https://athar.mohamadbelalsheshman.com/api/volunteer/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: formData.email, password: formData.password })
-            })
-            if (response.ok) {
-                const data = await response.json()
-                localStorage.setItem('token', data.token)
-                navigate('/')
-            } else if (response.status === 403) {
-                setApiError('Your account is not activated, please check your email')
-            } else if (response.status === 401) {
-                setApiError('Invalid email or password')
+            const response = await axios.post(
+                '/volunteer/login',
+                { email: formData.email, password: formData.password }
+            )
+
+            const data = response.data
+            localStorage.setItem('token', data.access_token)
+            localStorage.setItem('user', JSON.stringify(data.user))
+
+            navigate('/volunteer')
+
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 403) {
+                    setApiError('Your account is not activated, please check your email')
+                } else if (error.response.status === 401) {
+                    setApiError('Invalid email or password')
+                } else {
+                    setApiError('Something went wrong, please try again')
+                }
+            } else {
+                setApiError('Something went wrong, please try again')
             }
-        } catch {
-            setApiError('Something went wrong, please try again')
         } finally {
             setLoading(false)
         }

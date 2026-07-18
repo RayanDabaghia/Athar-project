@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import api from '../../api/axios'
 import arrowBack from '../../images/Icons/arrow.png'
 import OrgStepOne from '../../components/Organization/Auth/OrgStepOne'
 import OrgStepTwo from '../../components/Organization/Auth/OrgStepTwo'
@@ -31,7 +32,38 @@ const OrgSignUpPage = () => {
         const saved = localStorage.getItem(STORAGE_KEY)
         return saved ? JSON.parse(saved).formData : defaultFormData
     })
+    const [loading, setLoading] = useState(false)
+    const [apiError, setApiError] = useState('')
+    const nextStep = () => setCurrentStep(prev => prev + 1)
+    const prevStep = () => setCurrentStep(prev => prev - 1)
+    const handleRegister = async () => {
+        setLoading(true)
+        setApiError('')
+        try {
+            const data = new FormData()
+            data.append('org_name', formData.orgName)
+            data.append('official_email', formData.email)
+            data.append('phone_number', formData.phone)
+            data.append('address', formData.address)
+            data.append('org_description', formData.description)
+            data.append('password', formData.password)
 
+            formData.documents.forEach((file) => {
+                data.append('document[]', file)
+            })
+
+            await api.post('/organization/register', data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+
+            localStorage.removeItem(STORAGE_KEY)
+            nextStep()
+        } catch (error) {
+            setApiError(error.response?.data?.message || 'Something went wrong')
+        } finally {
+            setLoading(false)
+        }
+    }
     // ← كل ما تتغير الخطوة أو البيانات، نحفظهم
     useEffect(() => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -39,17 +71,12 @@ const OrgSignUpPage = () => {
             formData: { ...formData, documents: [] } // الملفات ما تنحفظ بـ localStorage
         }))
     }, [currentStep, formData])
-    const nextStep = () => setCurrentStep(prev => prev + 1)
-    const prevStep = () => setCurrentStep(prev => prev - 1)
-    const handleSuccess = () => {
-        localStorage.removeItem(STORAGE_KEY)
-        nextStep()
-    }
+
     const renderStep = () => {
         switch (currentStep) {
             case 1: return <OrgStepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
             case 2: return <OrgStepTwo formData={formData} setFormData={setFormData} onNext={nextStep} />
-            case 3: return <OrgStepThree formData={formData} setFormData={setFormData} onNext={handleSuccess} />
+            case 3: return <OrgStepThree formData={formData} setFormData={setFormData} onNext={handleRegister} loading={loading} apiError={apiError} />
             case 4: return <OrgSuccess />
             default: return <OrgStepOne formData={formData} setFormData={setFormData} onNext={nextStep} />
         }
