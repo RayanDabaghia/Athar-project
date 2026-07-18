@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const StepOne = ({ formData, setFormData, onNext }) => {
+const StepOne = ({ formData, setFormData, onNext, loading, apiError }) => {
     const [errors, setErrors] = useState({ fullName: '', email: '' })
 
     const validate = () => {
@@ -87,12 +87,14 @@ const StepOne = ({ formData, setFormData, onNext }) => {
                 </div>
 
             </div>
+            {apiError && <p className="text-red-500 text-[12px] mb-2 text-center">{apiError}</p>}
 
             {/* الزر */}
             <button
                 onClick={handleContinue}
+                disabled={loading}
                 className="w-full py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-4">
-                Continue
+                {loading ? 'Creating account...' : 'Continue'}
             </button>
 
             {/* Terms */}

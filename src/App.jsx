@@ -5,6 +5,7 @@ import CampaignDetailsPage from './pages/CampaignDetailsPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import VolunteerHomePage from './pages/Volunteer/VolunteerHomePage'
+import VoulnteerProfile from './pages/Volunteer/VoulnteerProfile'
 import SelectRolePage from './pages/SelectRolePage'
 import VolunteerSignUpPage from './pages/Volunteer/VoulnteerSignUpPage'
 import OrgSignUpPage from './pages/Organization/OrgSignUpPage'
@@ -23,6 +24,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/volunteer" element={<VolunteerHomePage />} />
+        <Route path="/volunteer-profile" element={<VoulnteerProfile />} />
         <Route path="/get-started" element={<SelectRolePage />} />
         <Route path="/signup/volunteer" element={<VolunteerSignUpPage />} />
         <Route path="/signup/organization" element={<OrgSignUpPage />} />

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import uploadIcon from '../../../images/Icons/upload.png'
-const OrgStepThree = ({ formData, setFormData, onNext }) => {
+const OrgStepThree = ({ formData, setFormData, onNext, loading, apiError }) => {
     const MAX_FILES = 6
     const [isDragging, setIsDragging] = useState(false)
     const [error, setError] = useState('')
@@ -126,11 +126,12 @@ const OrgStepThree = ({ formData, setFormData, onNext }) => {
             )}
 
             {error && <p className="text-red-500 text-[12px] mb-4">{error}</p>}
-
+            {apiError && <p className="text-red-500 text-[12px] mb-4">{apiError}</p>}
             {/* Submit */}
             <button
                 type="button"
                 onClick={handleSubmit}
+                disabled={loading}
                 className="w-[600px] py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity mb-4"
             >
                 Submit

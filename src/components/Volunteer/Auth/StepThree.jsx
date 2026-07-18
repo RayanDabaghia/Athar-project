@@ -122,7 +122,7 @@ const StepThree = ({ formData, setFormData, onNext, loading, apiError }) => {
                 disabled={loading}
                 className="w-full py-4 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[16px] hover:opacity-90 transition-opacity">
                 {loading ? 'Creating account...' : 'Get Started'}
-                Get Started
+
             </button>
 
         </div>
