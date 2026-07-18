@@ -1,19 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import api from '../api/axios'
 import arrowBack from '../images/Icons/arrow.png'
 import eyeOpen from '../images/Icons/open-eye.png'
 import eyeClose from '../images/Icons/eye-slash.png'
 //الخطوة الأولى
-const StepOne = ({ onNext }) => {
-    const [email, setEmail] = useState('')
+const StepOne = ({ onNext, email, setEmail, loading, apiError }) => {
     const [error, setError] = useState('')
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (!email.trim()) {
             setError('Email is required')
             return
         }
-        // TODO: API call هون
+        setError('')
         onNext()
     }
 
@@ -42,20 +42,20 @@ const StepOne = ({ onNext }) => {
                 />
                 {error && <p className="text-red-500 text-[12px] mt-1">{error}</p>}
             </div>
-
+            {apiError && <p className="text-red-500 text-[12px] mb-2">{apiError}</p>}
             <button
                 onClick={handleSend}
+                disabled={loading}
                 className="w-full py-3 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[10px] hover:opacity-90 transition-opacity"
             >
-                Send Code
+                {loading ? 'Sending...' : 'Send Code'}
             </button>
 
         </div>
     )
 }
 // الخطوة الثانية
-const StepTwo = ({ onNext }) => {
-    const [code, setCode] = useState('')
+const StepTwo = ({ onNext, code, setCode, loading, apiError }) => {
     const [error, setError] = useState('')
 
     const handleContinue = () => {
@@ -63,7 +63,7 @@ const StepTwo = ({ onNext }) => {
             setError('Verification code is required')
             return
         }
-        // TODO: API call هون
+        setError('')
         onNext()
     }
 
@@ -88,12 +88,13 @@ const StepTwo = ({ onNext }) => {
                 />
                 {error && <p className="text-red-500 text-[12px] mt-1 text-left">{error}</p>}
             </div>
-
+            {apiError && <p className="text-red-500 text-[12px] mb-2">{apiError}</p>}
             <button
                 onClick={handleContinue}
+                disabled={loading}
                 className="w-full py-3 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[10px] hover:opacity-90 transition-opacity mb-4"
             >
-                Continue
+                {loading ? 'Verifying...' : 'Continue'}
             </button>
 
             <p className="text-[14px] text-[#5C6B73] font-poppins">
@@ -105,7 +106,7 @@ const StepTwo = ({ onNext }) => {
     )
 }
 // ── الخطوة الثالثة ──
-const StepThree = ({ onNext }) => {
+const StepThree = ({ onNext, loading, apiError }) => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
     const [formData, setFormData] = useState({ password: '', confirm: '' })
@@ -134,8 +135,7 @@ const StepThree = ({ onNext }) => {
 
     const handleSave = () => {
         if (!validate()) return
-        // TODO: API call هون
-        onNext()
+        onNext(formData.password, formData.confirm)
     }
 
     return (
@@ -198,12 +198,13 @@ const StepThree = ({ onNext }) => {
                 </div>
 
             </div>
-
+            {apiError && <p className="text-red-500 text-[12px] mb-2">{apiError}</p>}
             <button
                 onClick={handleSave}
+                disabled={loading}
                 className="w-full py-3 bg-[#0A3A45] text-[#F7F9FA] text-[16px] font-semibold font-inter rounded-[10px] hover:opacity-90 transition-opacity"
             >
-                Save
+                {loading ? 'Saving...' : 'Save'}
             </button>
 
         </div>
@@ -212,15 +213,61 @@ const StepThree = ({ onNext }) => {
 const ForgotPasswordPage = () => {
     const navigate = useNavigate()
     const [currentStep, setCurrentStep] = useState(1)
+    const [email, setEmail] = useState('')
+    const [code, setCode] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [apiError, setApiError] = useState('')
 
     const nextStep = () => setCurrentStep(prev => prev + 1)
     const prevStep = () => setCurrentStep(prev => prev - 1)
+    const handleSendCode = async () => {
+        setLoading(true)
+        setApiError('')
+        try {
+            await api.post('/volunteer/forgot-password', { email })
+            nextStep()
+        } catch (error) {
+            setApiError(error.response?.data?.message || 'Something went wrong')
+        } finally {
+            setLoading(false)
+        }
+    }
 
+    const handleVerifyCode = async () => {
+        setLoading(true)
+        setApiError('')
+        try {
+            await api.post('/volunteer/verify-reset-code', { email, code })
+            nextStep()
+        } catch (error) {
+            setApiError(error.response?.data?.message || 'Invalid code')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleResetPassword = async (password, confirmPassword) => {
+        setLoading(true)
+        setApiError('')
+        try {
+            await api.post('/volunteer/reset-password', {
+                email,
+                code,
+                password,
+                password_confirmation: confirmPassword
+            })
+            navigate('/signin')
+        } catch (error) {
+            setApiError(error.response?.data?.message || 'Something went wrong')
+        } finally {
+            setLoading(false)
+        }
+    }
     const renderStep = () => {
         switch (currentStep) {
-            case 1: return <StepOne onNext={nextStep} />
-            case 2: return <StepTwo onNext={nextStep} />
-            case 3: return <StepThree onNext={nextStep} />
+            case 1: return <StepOne onNext={handleSendCode} email={email} setEmail={setEmail} loading={loading} apiError={apiError} />
+            case 2: return <StepTwo onNext={handleVerifyCode} code={code} setCode={setCode} loading={loading} apiError={apiError} />
+            case 3: return <StepThree onNext={handleResetPassword} loading={loading} apiError={apiError} />
             default: return null
         }
     }
