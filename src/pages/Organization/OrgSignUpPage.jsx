@@ -49,12 +49,10 @@ const OrgSignUpPage = () => {
             data.append('password', formData.password)
 
             formData.documents.forEach((file) => {
-                data.append('document[]', file)
+                data.append('document', file)
             })
 
-            await api.post('/organization/register', data, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
+            await api.post('/organization/register', data)
 
             localStorage.removeItem(STORAGE_KEY)
             nextStep()
