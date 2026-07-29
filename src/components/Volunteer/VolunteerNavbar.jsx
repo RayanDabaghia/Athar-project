@@ -8,9 +8,9 @@ const VolunteerNavbar = () => {
 
     const navLinks = [
         { name: "Home", path: "/volunteer" },
-        { name: "Organization", path: "/volunteer/organization" },
+        { name: "Organization", path: "/organization" },
         { name: "Campaigns", path: "/volunteer/campaigns" },
-        { name: "My campaigns", path: "/volunteer/my-campaigns" },
+        { name: "My campaigns", path: "/my-campaigns" },
     ]
 
     return (

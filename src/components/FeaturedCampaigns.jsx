@@ -1,7 +1,24 @@
+import { useState, useEffect } from 'react'
 import CampaignCard from './CampaignCard';
-import { campaigns } from '../data/campaigns'
+import api from '../api/axios'
 
 const FeaturedCampaigns = () => {
+    const [campaigns, setCampaigns] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchCampaigns = async () => {
+            try {
+                const response = await api.get('/campaigns')
+                setCampaigns(response.data.campaigns)
+            } catch (error) {
+                console.error('Failed to fetch campaigns:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchCampaigns()
+    }, [])
     return (
         <section className="bg-[#F7F9FA] py-20 px-4">
             <div className="max-w-[1309px] mx-auto text-center">
@@ -13,11 +30,17 @@ const FeaturedCampaigns = () => {
                 </div>
 
                 {/* شبكة الكروت المتجاوبة */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {campaigns.map((camp) => (
-                        <CampaignCard key={camp.id} camp={camp} />
-                    ))}
-                </div>
+                {loading ? (
+                    <p className="text-[#5C6B73] font-poppins">Loading campaigns...</p>
+                ) : campaigns.length === 0 ? (
+                    <p className="text-[#5C6B73] font-poppins">No campaigns available right now.</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {campaigns.map((camp) => (
+                            <CampaignCard key={camp.id} camp={camp} />
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );
