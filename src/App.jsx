@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from './pages/Homepage'
-import CampaignsPage from './pages/Campaigns'
+// import CampaignsPage from './pages/Campaigns'
 import CampaignDetailsPage from './pages/CampaignDetailsPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
@@ -11,6 +11,7 @@ import VolunteerSignUpPage from './pages/Volunteer/VoulnteerSignUpPage'
 import OrgSignUpPage from './pages/Organization/OrgSignUpPage'
 import SignInPage from './pages/SignInPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import Campaigns1 from './pages/Compaigns/compaigns1'
 import './App.css'
 import './index.css'
 function App() {
@@ -19,8 +20,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/campaigns" element={<CampaignsPage />} />
+        {/* <Route path="/campaigns" element={<CampaignsPage />} /> */}
         <Route path="/campaigns/:id" element={<CampaignDetailsPage />} />
+        <Route path="/campaigns/:id" element={<Campaigns1 />} />
+
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/volunteer" element={<VolunteerHomePage />} />
