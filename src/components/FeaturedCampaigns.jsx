@@ -24,11 +24,7 @@ const FeaturedCampaigns = () => {
             <div className="max-w-[1309px] mx-auto text-center">
 
                 {/* العنوان الرئيسي للقسم */}
-                <div className="relative w-max mx-auto flex flex-col items-center mb-16">
-                    <h2 className="text-[40px] font-bold font-outfit text-[#0A3A45]">Featured Campaigns</h2>
-                    <div className="absolute left-5 bottom-[-8px]  w-[50px] h-[4px] bg-[#FFC107] mt-2 rounded-full"></div>
-                </div>
-
+        
                 {/* شبكة الكروت المتجاوبة */}
                 {loading ? (
                     <p className="text-[#5C6B73] font-poppins">Loading campaigns...</p>

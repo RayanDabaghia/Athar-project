@@ -1,4 +1,4 @@
-import { useState } from 'react'
+<!-- import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AtharImage from '../images/Icons/SignIn.png'
 import eyeOpen from '../images/Icons/open-eye.png'
@@ -178,4 +178,4 @@ lg:w-1/2
           lg:min-h-[520px]
           flex
           flex-col
-          justify-c
+          justify-c -->

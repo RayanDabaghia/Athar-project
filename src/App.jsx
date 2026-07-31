@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from './pages/Homepage'
-// import CampaignsPage from './pages/Campaigns'
+import CampaignsPage from './pages/Campaigns'
 import CampaignDetailsPage from './pages/CampaignDetailsPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
@@ -24,7 +24,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          {/* <Route path="/campaigns" element={<CampaignsPage />} /> */}
+          <Route path="/campaigns" element={<CampaignsPage />} />
           <Route path="/campaigns/:id" element={<CampaignDetailsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
