@@ -11,7 +11,7 @@ const CampaignCard = ({ camp }) => {
             {/* حاوية الصورة مع الإطار الكحلي */}
             <div className="w-full h-[320px] rounded-[35px] border-[7px] border-[#0A3A45] overflow-hidden mb-6">
                 <img
-                    src={camp.image}
+                    src={camp.image_url}
                     alt={camp.title}
                     className="w-full h-full object-cover"
                 />
@@ -26,7 +26,7 @@ const CampaignCard = ({ camp }) => {
                 {/* ااسم المنظمة*/}
                 <div className="flex items-center gap-2 mb-3">
                     <img src={Union} alt="Union" className="w-5 h-5 object-contain" />
-                    <span className="text-[#06272F] text-[14px] font-light font-poppins">{camp.organization}</span>
+                    <span className="text-[#06272F] text-[14px] font-light font-poppins">{camp.org_name}</span>
                 </div>
                 {/* الموقع باستخدام الأيقونة الثابتة المستوردة من فيجما */}
                 <div className="flex items-center gap-2 mb-3">
@@ -43,7 +43,7 @@ const CampaignCard = ({ camp }) => {
                     {/* الخط الفاصل العمودي */}
                     <div className="w-[1px] h-4 bg-[#FFC107]"></div>
 
-                    <span className="text-[#06272F] text-[14px] font-light font-poppins">{camp.reviews} Reviews</span>
+                    <span className="text-[#06272F] text-[14px] font-light font-poppins">{camp.reviews_count} Reviews</span>
                 </div>
 
                 {/* زر التفاصيل */}
